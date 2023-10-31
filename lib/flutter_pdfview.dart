@@ -39,7 +39,7 @@ class PDFView extends StatefulWidget {
     this.onPinchZoom,
     this.onScrollAnimation,
     this.enableAntialiasing = true,
-    this.enabledAnnotationRendering = false,
+    this.enableAnnotationRendering = false,
     this.gestureRecognizers,
     this.enableSwipe = true,
     this.swipeHorizontal = false,
@@ -89,7 +89,7 @@ class PDFView extends StatefulWidget {
   final bool enableAntialiasing;
 
   /// Enable annotation rendering. Default false
-  final bool enabledAnnotationRendering;
+  final bool enableAnnotationRendering;
 
   /// Used with preventLinkNavigation=true. It's helpful to customize link navigation
   final LinkHandlerCallback? onLinkHandler;
@@ -252,7 +252,7 @@ class _PDFViewSettings {
   _PDFViewSettings(
       {this.enableDoubleTap,
       this.enableAntialiasing,
-      this.enabledAnnotationRendering,
+      this.enableAnnotationRendering,
       this.enableSwipe,
       this.swipeHorizontal,
       this.password,
@@ -269,7 +269,7 @@ class _PDFViewSettings {
     return _PDFViewSettings(
         enableDoubleTap: widget.enableDoubleTap,
         enableAntialiasing: widget.enableAntialiasing,
-        enabledAnnotationRendering: widget.enabledAnnotationRendering,
+        enableAnnotationRendering: widget.enableAnnotationRendering,
         enableSwipe: widget.enableSwipe,
         swipeHorizontal: widget.swipeHorizontal,
         password: widget.password,
@@ -284,7 +284,7 @@ class _PDFViewSettings {
 
   final bool? enableDoubleTap;
   final bool? enableAntialiasing;
-  final bool? enabledAnnotationRendering;
+  final bool? enableAnnotationRendering;
   final bool? enableSwipe;
   final bool? swipeHorizontal;
   final String? password;
@@ -302,7 +302,7 @@ class _PDFViewSettings {
     return <String, dynamic>{
       'enableDoubleTap': enableDoubleTap,
       'enableAntialiasing': enableAntialiasing,
-      'enabledAnnotationRendering': enabledAnnotationRendering,
+      'enableAnnotationRendering': enableAnnotationRendering,
       'enableSwipe': enableSwipe,
       'swipeHorizontal': swipeHorizontal,
       'password': password,
@@ -325,9 +325,9 @@ class _PDFViewSettings {
     if (enableAntialiasing != newSettings.enableAntialiasing) {
       updates['enableAntialiasing'] = newSettings.enableAntialiasing;
     }
-    if (enabledAnnotationRendering != newSettings.enabledAnnotationRendering) {
-      updates['enabledAnnotationRendering'] =
-          newSettings.enabledAnnotationRendering;
+    if (enableAnnotationRendering != newSettings.enableAnnotationRendering) {
+      updates['enableAnnotationRendering'] =
+          newSettings.enableAnnotationRendering;
     }
     if (enableSwipe != newSettings.enableSwipe) {
       updates['enableSwipe'] = newSettings.enableSwipe;
