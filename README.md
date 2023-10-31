@@ -15,7 +15,11 @@ Add this to your package's pubspec.yaml file:
 
 ```
 dependencies:
-  flutter_pdfview: ^1.2.7
+  # 1.3.3
+  flutter_pdfview: 
+    git:
+      url: https://github.com/93cgutierrez/flutter_pdfview.git
+      ref: v1.3.3
 ```
 
 ### 2. Install it
@@ -40,28 +44,35 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 
 ## Options
 
-| Name                  | Android | iOS |      Default      |
-| :-------------------- | :-----: | :-: | :---------------: |
-| defaultPage           |   ✅    | ✅  |        `0`        |
-| onViewCreated         |   ✅    | ✅  |      `null`       |
-| onRender              |   ✅    | ✅  |      `null`       |
-| onPageChanged         |   ✅    | ✅  |      `null`       |
-| onError               |   ✅    | ✅  |      `null`       |
-| onPageError           |   ✅    | ❌  |      `null`       |
-| onLinkHandle          |   ✅    | ✅  |      `null`       |
-| gestureRecognizers    |   ✅    | ✅  |      `null`       |
-| filePath              |   ✅    | ✅  |                   |
-| pdfData               |   ✅    | ✅  |                   |
-| fitPolicy             |   ✅    | ❌  | `FitPolicy.WIDTH` |
-| enableSwipe           |   ✅    | ✅  |      `true`       |
-| swipeHorizontal       |   ✅    | ✅  |      `false`      |
-| password              |   ✅    | ✅  |      `null`       |
-| nightMode             |   ✅    | ❌  |      `false`      |
-| password              |   ✅    | ✅  |      `null`       |
-| autoSpacing           |   ✅    | ✅  |      `true`       |
-| pageFling             |   ✅    | ✅  |      `true`       |
-| pageSnap              |   ✅    | ❌  |      `true`       |
-| preventLinkNavigation |   ✅    | ✅  |      `false`      |
+| Name                           | Android | iOS |      Default      |
+|:-------------------------------| :-----: | :-: |:-----------------:|
+| defaultPage                    |   ✅    | ✅  |        `0`        |
+| onViewCreated                  |   ✅    | ✅  |      `null`       |
+| onRender                       |   ✅    | ✅  |      `null`       |
+| onPageChanged                  |   ✅    | ✅  |      `null`       |
+| onError                        |   ✅    | ✅  |      `null`       |
+| onPageError                    |   ✅    | ❌  |      `null`       |
+| onLinkHandle                   |   ✅    | ✅  |      `null`       |
+| onTap                          |   ✅    | ❌  |      `null`       |
+| onDoubleTap                    |   ✅    | ❌  |      `null`       |
+| onPinchZoom                    |   ✅    | ❌  |      `null`       |
+| onScrollAnimation              |   ✅    | ❌  |      `null`       |
+| gestureRecognizers             |   ✅    | ✅  |      `null`       |
+| filePath                       |   ✅    | ✅  |                   |
+| pdfData                        |   ✅    | ✅  |                   |
+| fitPolicy                      |   ✅    | ❌  | `FitPolicy.WIDTH` |
+| enableSwipe                    |   ✅    | ✅  |      `true`       |
+| swipeHorizontal                |   ✅    | ✅  |      `false`      |
+| password                       |   ✅    | ✅  |      `null`       |
+| nightMode                      |   ✅    | ❌  |      `false`      |
+| password                       |   ✅    | ✅  |      `null`       |
+| autoSpacing                    |   ✅    | ✅  |      `true`       |
+| pageFling                      |   ✅    | ✅  |      `true`       |
+| pageSnap                       |   ✅    | ❌  |      `true`       |
+| preventLinkNavigation          |   ✅    | ✅  |      `false`      |
+| enableDoubleTap                |   ✅    | ❌  |      `false`      |
+| enableAntialiasing             |   ✅    | ❌  |      `false`      |
+| enableAnnotationRendering      |   ✅    | ❌  |      `false`      |
 
 ## Controller Options
 
@@ -70,6 +81,8 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 | getPageCount   | Get total page count |     -      | `Future<int>`  |
 | getCurrentPage |   Get current page   |     -      | `Future<int>`  |
 | setPage        |    Go to/Set page    | `int page` | `Future<bool>` |
+
+and more ...
 
 ## Example
 
@@ -80,6 +93,15 @@ PDFView(
   swipeHorizontal: true,
   autoSpacing: false,
   pageFling: false,
+  pageSnap: true,
+  defaultPage: currentPage!,
+  fitPolicy: FitPolicy.WIDTH,
+  fitEachPage: false,
+  preventLinkNavigation: true,
+  // if set to true the link is handled in flutter
+  enableDoubleTap: true,
+  enableAntialiasing: true,
+  enableAnnotationRendering: true,
   onRender: (_pages) {
     setState(() {
       pages = _pages;
@@ -98,6 +120,18 @@ PDFView(
   onPageChanged: (int page, int total) {
     print('page change: $page/$total');
   },
+  onTap: (String? motionEvent) {
+    print('onTap: $motionEvent');
+  },
+  onDoubleTap: (String? animation, double oldZoom, double newZoom) {
+    print('onDoubleTap: animation: $animation, oldZoom: $oldZoom, newZoom: $newZoom');
+  },
+  onPinchZoom: (String? animation, double oldZoom, double newZoom) {
+    print('onPinchZoom: animation: $animation, oldZoom: $oldZoom, newZoom: $newZoom');
+  },
+  onScrollAnimation: (String? animation, int scrollMoveDirection) {
+    print('onScrollAnimation: animation: $animation scrollMoveDirection: $scrollMoveDirection');
+  },
 ),
 ```
 
@@ -113,26 +147,10 @@ PDFView(
 
 # Future plans
 
-- Replace barteksc/AndroidPdfViewer with MuPDF or Android Native PDF Renderer.
-- Improve documentation
-- Support other platforms such as MacOS, Windows, Linux and Web
-- Add search functionality
-- Improve performance on zooming, page changing
-- Improve image quality
-- Write more test
-
-# Support
-
-<p align="center">
-<a  href="https://www.buymeacoffee.com/endigo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-blue.png" alt="Buy Me A Coffee" height=60 ></a>
-</p>
-
-<p align="center">
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=98DC9WJ8782WW&source=url" target="_blank">
-   <img height=60 src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" >
-    </a>
-</p>
-
 ### Developer
+
+- [93cgutierrez](https://github.com/93cgutierrez)
+
+### Based on the original:
 
 - [endigo](https://github.com/endigo)
